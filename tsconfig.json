@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "compilerOptions": {
+    "outDir": "dist/src",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "types": ["node", "jest"],
+    "target": "es6",
+    "lib": ["es6", "es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types"],
+    "sourceMap": true,
+    "allowJs": true,
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@database/*": ["./src/database/*"],
+      "@src/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "./src",
+    "@types/fastify.d.ts",
+    "@types/nestjs.d.ts",
+    "./src/core/use-cases/reports/**/template/*.ejs",
+    "./src/core/use-cases/reports/**/template/*.css",
+    "./src/core/use-cases/reports/**/template/*.png",
+    "./src/core/use-cases/reports/**/template/*.*"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

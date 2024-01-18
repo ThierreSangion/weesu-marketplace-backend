@@ -1,0 +1,45 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: searchApi-postgres
+    environment:
+      POSTGRES_USER: "${DB_POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${DB_POSTGRES_PASS}"
+      POSTGRES_DB: "${DB_POSTGRES_DATABASE}"
+    ports:
+      - "${DB_DOCKER_PORT:-5432}:5432"
+    networks:
+      - internal
+    volumes:
+      - 'postgres-data:/var/lib/postgresql/data'
+
+  node-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gusfar-backend
+    restart: always
+    environment:
+      POSTGRES_HOST: $DB_POSTGRES_HOST
+      POSTGRES_PORT: $DB_POSTGRES_PORT
+      POSTGRES_DB: $DB_POSTGRES_DATABASE
+      POSTGRES_USER: $DB_POSTGRES_USER
+      POSTGRES_PASSWORD: $DB_POSTGRES_PASS
+    depends_on:
+      - postgres
+    ports:
+      - "${BACKEND_PORT}:3001"
+    networks:
+      - internal
+    env_file:
+      - .env
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
